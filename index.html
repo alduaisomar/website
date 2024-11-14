@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Popup styles */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .popup-content {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            text-align: center;
+        }
+        #closePopup {
+            margin-top: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #740b06;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #closePopup:hover {
+            background-color: #a00b06;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            max-width: 400px; /* Adjusts the max-width of the image */
+        }
+    </style>
+</head>
+<body>
+    <div class="popup" id="popup">
+        <div class="popup-content">
+            <p>For the listening section, please bring wired headphones. The PCs in the labs only support connections via AUX and USB Type-A cables. Without headphones, you will not be able to complete the listening section, and a score of 0 will be assigned for this part.</p>
+            <img src="C:\Users\omara\Desktop\image8.png" alt="Cable Types">
+            <button id="closePopup">Close</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <h1>Student Information</h1>
+        <input type="text" id="searchInput" placeholder="Enter student ID...">
+        <button id="searchBtn">Search</button>
+        <div id="studentInfo"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const studentData = [
+                { id: "20231405020", name: "Abed Alrahman Abdallah Khaled Rjoub", section: "19", lecturer: "Aseel + Ashraf", session: "1st Session", time: "11:30-13:30", lab: "B002" },
+                { id: "20231404008", name: "Adam Atef Yousef Ktait", section: "19", lecturer: "Aseel + Ashraf", session: "1st Session", time: "11:30-13:30", lab: "B002" },
+                { id: "20231501204", name: "Omar Majed Abdallah Alhadba", section: "20", lecturer: "Abdo", session: "2nd Session", time: "14:00-16:00", lab: "M327" }
+            ];
+
+            const searchInput = document.getElementById('searchInput');
+            const searchBtn = document.getElementById('searchBtn');
+            const studentInfo = document.getElementById('studentInfo');
+            const popup = document.getElementById('popup');
+            const closePopup = document.getElementById('closePopup');
+
+            closePopup.addEventListener('click', function () {
+                popup.style.display = 'none';
+            });
+
+            function displayStudentInfo(student) {
+                const table = document.createElement('table');
+                const tbody = document.createElement('tbody');
+
+                for (const key in student) {
+                    if (Object.hasOwnProperty.call(student, key)) {
+                        const tr = document.createElement('tr');
+                        const th = document.createElement('th');
+                        const td = document.createElement('td');
+
+                        th.textContent = key;
+                        td.textContent = student[key];
+
+                        tr.appendChild(th);
+                        tr.appendChild(td);
+                        tbody.appendChild(tr);
+                    }
+                }
+
+                table.appendChild(tbody);
+                studentInfo.innerHTML = '';
+                studentInfo.appendChild(table);
+            }
+
+            searchBtn.addEventListener('click', function () {
+                const id = searchInput.value.trim();
+                if (id !== '') {
+                    searchStudent(id);
+                } else {
+                    studentInfo.innerHTML = '<p>Please enter a student ID</p>';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
